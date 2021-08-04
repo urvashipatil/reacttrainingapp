@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AppContext } from "./context/app-context";
 
-export default function CartDetails({ cart }) {
+export default function CartDetails() {
+  const { cart } = useContext(AppContext);
   const getTotal = () => {
     //React.memo here
     let total = 0;

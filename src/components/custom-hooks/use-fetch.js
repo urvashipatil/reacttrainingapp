@@ -12,7 +12,6 @@ export default function useFetch(url) {
     if (!isLoading) {
       return false;
     }
-
     callApi(options);
   }, [isLoading, url]);
 
@@ -22,9 +21,9 @@ export default function useFetch(url) {
   };
 
   const callApi = async (options) => {
-    const resp = await axios.create({
+    const resp = await axios({
       url,
-      options,
+      ...options,
     });
     setIsLoading(false);
     if (resp.data) {

@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { AppContext } from "./context/app-context";
 
-export default function Header({ cart }) {
+export default function Header() {
   // console.log("header");
+  const { cart } = useContext(AppContext);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const onSearchClick = () => {
@@ -58,7 +60,11 @@ export default function Header({ cart }) {
           >
             <option value="">Select Category</option>
             {categories.map((c) => {
-              return <option value={c}>{c}</option>;
+              return (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              );
             })}
           </select>
         </div>

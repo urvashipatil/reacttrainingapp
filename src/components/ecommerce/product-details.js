@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import { AppContext } from "./context/app-context";
 
 export default function ProductDetails(props) {
   // console.log(props);
-  const { id:productId } = useParams();
-  
+  const { id: productId } = useParams();
+
   // const productId = 1;
   // props.match.params.id;
-  const { cart, setCart } = props;
+  const { cart, setCart } = useContext(AppContext);
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -22,7 +23,7 @@ export default function ProductDetails(props) {
       setLoading(false);
     }
     getProduct();
-  }, []);
+  }, [productId]);
   const onAddToCart = (product) => {
     setCart([...cart, product]);
   };

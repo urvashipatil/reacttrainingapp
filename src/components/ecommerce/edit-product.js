@@ -2,16 +2,12 @@ import React, { useEffect, useState, useRef } from "react";
 import useForm from "../custom-hooks/use-form";
 import axios from "axios";
 import useFetch from "../custom-hooks/use-fetch";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
-export default function AddProduct() {
-  const [state, setState] = useState({
-    title: "",
-    description: "",
-    category: "",
-    image: "",
-    price: 0,
-  });
+export default function EditProduct(props) {
+  const location = useLocation();
+  console.log("location", location);
+  const [state, setState] = useState(JSON.parse(location.state));
   const [isLoading, response, serviceError, doFetch] = useFetch(
     "https://fakestoreapi.com/products"
   );
@@ -27,6 +23,10 @@ export default function AddProduct() {
     afterSubmit
   );
   // const [error, setError] = useState({});
+
+  useEffect(() => {
+    setState(JSON.parse(location.state));
+  }, [location.state]);
 
   useEffect(() => {
     titleRef.current.focus();
@@ -200,7 +200,7 @@ export default function AddProduct() {
           )}
         </div> */}
         <div className="form-group">
-          <label htmlFor="image">Image URL</label>
+          <label htmlFor="image">Change Image</label>
           <input
             type="file"
             // value={state.image}
@@ -209,7 +209,12 @@ export default function AddProduct() {
             id="image"
             name="image"
           />
-          {state.image && <img src={state.image} />}
+          {state.image && (
+            <img
+              src={state.image}
+              style={{ height: "100px", width: "100px" }}
+            />
+          )}
           {error?.image && (
             <small className="form-text text-danger">{error?.image}</small>
           )}
